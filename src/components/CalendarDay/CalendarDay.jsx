@@ -28,8 +28,9 @@ const CalendarDay = ({
             <p className="calendar-day-text">{day}</p>
           </div>
           <Stack spacing={0.2}>
-            {reminders.map((reminder) => (
+            {reminders.map((reminder, index) => (
               <Reminder
+                key={index}
                 reminder={reminder}
                 handleOpenReminder={handleOpenReminder}
               ></Reminder>

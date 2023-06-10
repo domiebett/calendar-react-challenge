@@ -6,7 +6,7 @@ import ReminderCard from "components/Reminders/ReminderCard";
 import PropTypes from "prop-types";
 import { getCurrentMonthCalendarizableDays } from "utils/dateUtils";
 
-import { getRowHeightFromCurrentMonth } from "./helpers";
+import { getRowHeightFromCurrentMonth, uuid } from "./helpers";
 
 const CalendarGrid = ({ date = new Date() }) => {
   const calendarDays = getCurrentMonthCalendarizableDays(date);
@@ -19,15 +19,17 @@ const CalendarGrid = ({ date = new Date() }) => {
   const [monthReminders, setMonthReminders] = useState({
     "9.6.2023": [
       {
+        id: uuid(),
         name: "Reminder One",
         time: "10:56",
         day: 9,
         month: 6,
         year: 2023,
         city: "Nairobi",
-        weather: "Sunny",
+        weather: "sunny",
       },
       {
+        id: uuid(),
         name: "Reminder Two",
         time: "13:00",
         day: 9,
@@ -39,6 +41,7 @@ const CalendarGrid = ({ date = new Date() }) => {
     ],
     "12.6.2023": [
       {
+        id: uuid(),
         name: "Reminder One",
         time: "09:00",
         day: 12,
@@ -49,6 +52,20 @@ const CalendarGrid = ({ date = new Date() }) => {
       },
     ],
   });
+
+  const handleRemindersUpdate = (changedReminder) => {
+    const reminders = monthReminders;
+
+    for (let reminder of monthReminders[changedReminder.date]) {
+      if (reminder.id === changedReminder.id) {
+        Object.keys(changedReminder.changed).forEach((key) => {
+          reminder[key] = changedReminder.changed[key];
+        });
+      }
+    }
+
+    return setMonthReminders({ ...reminders });
+  };
 
   return (
     <>
@@ -62,7 +79,6 @@ const CalendarGrid = ({ date = new Date() }) => {
         <CalendarHeader />
         {calendarDays?.map((day) => {
           const dateString = `${day.number}.${day.month}.${day.year}`;
-          const dateReminders = monthReminders[dateString];
           return (
             <CalendarDay
               key={`${day.number}.${day.month}.${day.year}`}
@@ -71,7 +87,7 @@ const CalendarGrid = ({ date = new Date() }) => {
               year={day.year}
               isEnabled={day.isEnabled}
               height={gridRowHeight}
-              reminders={dateReminders}
+              reminders={monthReminders[dateString]}
               handleOpenReminder={handleOpenReminder}
             />
           );
@@ -82,6 +98,7 @@ const CalendarGrid = ({ date = new Date() }) => {
         <ReminderCard
           reminder={openedReminder}
           handleCloseReminder={handleCloseReminder}
+          updateReminders={handleRemindersUpdate}
         ></ReminderCard>
       )}
     </>

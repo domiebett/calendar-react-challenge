@@ -21,3 +21,5 @@ export const getRowHeightFromCurrentMonth = (amountOfDays) => {
       return CALENDAR_ROW_HEIGHT.MEDIUM;
   }
 };
+
+export const uuid = () => Math.random().toString(16).slice(2);
