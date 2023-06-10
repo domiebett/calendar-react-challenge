@@ -6,7 +6,7 @@ import ReminderCard from "components/Reminders/ReminderCard";
 import PropTypes from "prop-types";
 import { getCurrentMonthCalendarizableDays } from "utils/dateUtils";
 
-import { getRowHeightFromCurrentMonth, uuid } from "./helpers";
+import { getRowHeightFromCurrentMonth, getSampleReminders } from "./helpers";
 
 const CalendarGrid = ({ date = new Date() }) => {
   const calendarDays = getCurrentMonthCalendarizableDays(date);
@@ -16,55 +16,19 @@ const CalendarGrid = ({ date = new Date() }) => {
   const handleOpenReminder = (reminder) => setOpenedReminder(reminder);
   const handleCloseReminder = (reminder) => setOpenedReminder(null);
 
-  const [monthReminders, setMonthReminders] = useState({
-    "9.6.2023": [
-      {
-        id: uuid(),
-        name: "Reminder One",
-        time: "10:56",
-        day: 9,
-        month: 6,
-        year: 2023,
-        city: "Nairobi",
-        weather: "sunny",
-      },
-      {
-        id: uuid(),
-        name: "Reminder Two",
-        time: "13:00",
-        day: 9,
-        month: 6,
-        year: 2023,
-        city: "Nairobi",
-        weather: "cloudy",
-      },
-    ],
-    "12.6.2023": [
-      {
-        id: uuid(),
-        name: "Reminder One",
-        time: "09:00",
-        day: 12,
-        month: 6,
-        year: 2023,
-        city: "Eldoret",
-        weather: "windy",
-      },
-    ],
-  });
+  const [monthReminders, setMonthReminders] = useState(getSampleReminders());
 
-  const handleRemindersUpdate = (changedReminder) => {
-    const reminders = monthReminders;
+  const updateReminder = (updatedReminder) => {
+    const reminderDate = `${updatedReminder.day}.${updatedReminder.month}.${updatedReminder.year}`;
+    const reminders = { ...monthReminders };
 
-    for (let reminder of monthReminders[changedReminder.date]) {
-      if (reminder.id === changedReminder.id) {
-        Object.keys(changedReminder.changed).forEach((key) => {
-          reminder[key] = changedReminder.changed[key];
-        });
-      }
-    }
+    const dateReminders = reminders[reminderDate].map((reminder) => {
+      return reminder.id === updatedReminder.id ? updatedReminder : reminder;
+    });
 
-    return setMonthReminders({ ...reminders });
+    reminders[reminderDate] = dateReminders;
+
+    return setMonthReminders(reminders);
   };
 
   return (
@@ -98,7 +62,7 @@ const CalendarGrid = ({ date = new Date() }) => {
         <ReminderCard
           reminder={openedReminder}
           handleCloseReminder={handleCloseReminder}
-          updateReminders={handleRemindersUpdate}
+          updateReminder={updateReminder}
         ></ReminderCard>
       )}
     </>

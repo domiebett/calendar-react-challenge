@@ -11,16 +11,28 @@ import IconText from "components/Inputs/IconText";
 import IconTextField from "components/Inputs/IconTextField";
 import IconWeather from "components/Inputs/IconWeather";
 
-const ReminderCard = ({ reminder, updateReminders = () => {} }) => {
+const ReminderCard = ({ reminder, updateReminder = () => {} }) => {
   const reminderDate = `${reminder.day}/${reminder.month}/${reminder.year}`;
   const [name, setName] = useState(reminder.name);
   const [city, setCity] = useState(reminder.city);
+
+  const inputStateMap = {
+    name: setName,
+    city: setCity,
+  };
+
+  const handleReminderUpdate = (event, changedField, value) => {
+    inputStateMap[changedField](value);
+    const updatedReminder = reminder;
+    updatedReminder[changedField] = value;
+    updateReminder(updatedReminder);
+  };
 
   const handleChangeName = (event) => {
     const changedName = event.target.value;
     const reminderDateKey = `${reminder.day}.${reminder.month}.${reminder.year}`;
     setName(event.target.value);
-    updateReminders({
+    updateReminder({
       date: reminderDateKey,
       id: reminder.id,
       changed: {
@@ -35,9 +47,11 @@ const ReminderCard = ({ reminder, updateReminders = () => {} }) => {
         <div className="reminder-card-name">
           <TextField
             variant="standard"
-            value={name}
+            value={reminder.name}
             inputProps={{ style: { fontSize: "2em" } }}
-            onChange={handleChangeName}
+            onChange={(event) =>
+              handleReminderUpdate(event, "name", event.target.value)
+            }
           />
         </div>
 
@@ -54,8 +68,10 @@ const ReminderCard = ({ reminder, updateReminders = () => {} }) => {
           <div className="reminder-card-horizontal">
             <IconTextField
               icon={faLocationDot}
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
+              value={reminder.city}
+              onChange={(event) =>
+                handleReminderUpdate(event, "city", event.target.value)
+              }
             />
 
             <IconWeather weather={reminder.weather} />
