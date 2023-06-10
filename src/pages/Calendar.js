@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
+import { Modal } from "@material-ui/core";
 import { DateNavigator, CalendarGrid } from "components";
+import Reminders from "components/Reminders/Reminders";
 import { getCurrentDate } from "utils/dateUtils";
 
 const Calendar = () => {
