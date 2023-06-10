@@ -1,4 +1,8 @@
-const Reminder = ({ reminder, handleOpenReminder = () => {} }) => (
+const Reminder = ({
+  reminder,
+  keepReminderOpenRef,
+  handleOpenReminder = () => {},
+}) => (
   <div
     onClick={() => handleOpenReminder(reminder)}
     className="calendar-day-reminder-name"

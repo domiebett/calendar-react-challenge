@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Grid } from "@material-ui/core";
 import { CalendarHeader, CalendarDay } from "components";
 import ReminderCard from "components/Reminders/ReminderCard";
 import PropTypes from "prop-types";
 import { getCurrentMonthCalendarizableDays } from "utils/dateUtils";
+import { useCloseOnClickOutside } from "utils/hooks";
 
 import { getRowHeightFromCurrentMonth, getSampleReminders } from "./helpers";
 
@@ -13,10 +14,13 @@ const CalendarGrid = ({ date = new Date() }) => {
   const gridRowHeight = getRowHeightFromCurrentMonth(calendarDays?.length);
 
   const [openedReminder, setOpenedReminder] = useState(null);
-  const handleOpenReminder = (reminder) => setOpenedReminder(reminder);
-  const handleCloseReminder = (reminder) => setOpenedReminder(null);
-
   const [monthReminders, setMonthReminders] = useState(getSampleReminders());
+
+  const handleOpenReminder = (reminder) => setOpenedReminder(reminder);
+  const handleCloseReminder = () => setOpenedReminder(null);
+
+  const keepReminderOpenRef = useRef();
+  useCloseOnClickOutside(keepReminderOpenRef, handleCloseReminder);
 
   const updateReminder = (updatedReminder) => {
     const reminderDate = `${updatedReminder.day}.${updatedReminder.month}.${updatedReminder.year}`;
@@ -45,6 +49,7 @@ const CalendarGrid = ({ date = new Date() }) => {
           const dateString = `${day.number}.${day.month}.${day.year}`;
           return (
             <CalendarDay
+              keepReminderOpenRef={keepReminderOpenRef}
               key={`${day.number}.${day.month}.${day.year}`}
               day={day.number}
               month={day.month}
@@ -60,6 +65,7 @@ const CalendarGrid = ({ date = new Date() }) => {
 
       {openedReminder && (
         <ReminderCard
+          keepReminderOpenRef={keepReminderOpenRef}
           reminder={openedReminder}
           handleCloseReminder={handleCloseReminder}
           updateReminder={updateReminder}

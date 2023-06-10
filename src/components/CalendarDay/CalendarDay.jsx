@@ -8,6 +8,7 @@ const CalendarDay = ({
   month,
   year,
   height,
+  keepReminderOpenRef,
   isEnabled = false,
   reminders = [],
   handleOpenReminder = () => {},
@@ -30,6 +31,7 @@ const CalendarDay = ({
           <Stack spacing={0.2}>
             {reminders.map((reminder, index) => (
               <Reminder
+                keepReminderOpenRef={keepReminderOpenRef}
                 key={index}
                 reminder={reminder}
                 handleOpenReminder={handleOpenReminder}

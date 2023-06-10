@@ -11,7 +11,11 @@ import IconText from "components/Inputs/IconText";
 import IconTextField from "components/Inputs/IconTextField";
 import IconWeather from "components/Inputs/IconWeather";
 
-const ReminderCard = ({ reminder, updateReminder = () => {} }) => {
+const ReminderCard = ({
+  reminder,
+  keepReminderOpenRef,
+  updateReminder = () => {},
+}) => {
   const reminderDate = `${reminder.day}/${reminder.month}/${reminder.year}`;
   const [name, setName] = useState(reminder.name);
   const [city, setCity] = useState(reminder.city);
@@ -28,21 +32,12 @@ const ReminderCard = ({ reminder, updateReminder = () => {} }) => {
     updateReminder(updatedReminder);
   };
 
-  const handleChangeName = (event) => {
-    const changedName = event.target.value;
-    const reminderDateKey = `${reminder.day}.${reminder.month}.${reminder.year}`;
-    setName(event.target.value);
-    updateReminder({
-      date: reminderDateKey,
-      id: reminder.id,
-      changed: {
-        name: changedName,
-      },
-    });
-  };
-
   return (
-    <Card variant="elevation" className="reminder-card">
+    <Card
+      ref={keepReminderOpenRef}
+      variant="elevation"
+      className="reminder-card"
+    >
       <CardContent>
         <div className="reminder-card-name">
           <TextField
