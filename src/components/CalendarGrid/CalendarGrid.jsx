@@ -1,28 +1,38 @@
 import React, { useState } from "react";
 
-import { Grid, Modal } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { CalendarHeader, CalendarDay } from "components";
+import ReminderCard from "components/Reminders/ReminderCard";
 import PropTypes from "prop-types";
 import { getCurrentMonthCalendarizableDays } from "utils/dateUtils";
 
 import { getRowHeightFromCurrentMonth } from "./helpers";
-import Reminders from "components/Reminders/Reminders";
 
 const CalendarGrid = ({ date = new Date() }) => {
   const calendarDays = getCurrentMonthCalendarizableDays(date);
   const gridRowHeight = getRowHeightFromCurrentMonth(calendarDays?.length);
-  const [openModal, setModalOpened] = useState(false);
+
+  const [openedReminder, setOpenedReminder] = useState(null);
+  const handleOpenReminder = (reminder) => setOpenedReminder(reminder);
+  const handleCloseReminder = (reminder) => setOpenedReminder(null);
+
   const [monthReminders, setMonthReminders] = useState({
     "9.6.2023": [
       {
         name: "Reminder One",
         time: "10:56",
+        day: 9,
+        month: 6,
+        year: 2023,
         city: "Nairobi",
         weather: "Sunny",
       },
       {
         name: "Reminder Two",
         time: "13:00",
+        day: 9,
+        month: 6,
+        year: 2023,
         city: "Nairobi",
         weather: "cloudy",
       },
@@ -31,18 +41,14 @@ const CalendarGrid = ({ date = new Date() }) => {
       {
         name: "Reminder One",
         time: "09:00",
+        day: 12,
+        month: 6,
+        year: 2023,
         city: "Eldoret",
         weather: "windy",
       },
     ],
   });
-  const [remindersModalDate, setRemindersModalDate] = useState(null);
-
-  const handleModalClose = () => setModalOpened(false);
-  const handleModalOpen = (modalDate) => {
-    setRemindersModalDate(modalDate);
-    setModalOpened(true);
-  };
 
   return (
     <>
@@ -65,19 +71,19 @@ const CalendarGrid = ({ date = new Date() }) => {
               year={day.year}
               isEnabled={day.isEnabled}
               height={gridRowHeight}
-              handleModalOpen={handleModalOpen}
               reminders={dateReminders}
+              handleOpenReminder={handleOpenReminder}
             />
           );
         })}
       </Grid>
 
-      <Reminders
-        date={remindersModalDate}
-        reminders={monthReminders[remindersModalDate]}
-        openModal={openModal}
-        handleModalClose={handleModalClose}
-      ></Reminders>
+      {openedReminder && (
+        <ReminderCard
+          reminder={openedReminder}
+          handleCloseReminder={handleCloseReminder}
+        ></ReminderCard>
+      )}
     </>
   );
 };

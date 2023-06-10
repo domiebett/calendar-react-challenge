@@ -35,4 +35,12 @@
     font-size: $font-size-extra-small;
     margin-top: $padding-medium;
   }
+  &-reminder-name {
+    width: 100%;
+    background-color: #9AC5F4;
+    color: white;
+    padding: 0.1em;
+    font-size: 0.75em;
+    cursor: pointer;
+  }
 }

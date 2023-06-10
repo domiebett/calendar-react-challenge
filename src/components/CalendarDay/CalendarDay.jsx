@@ -1,4 +1,6 @@
 import { Card, CardContent, Grid } from "@material-ui/core";
+import { Stack } from "@mui/material";
+import Reminder from "components/Reminders/Reminder";
 import PropTypes from "prop-types";
 
 const CalendarDay = ({
@@ -8,10 +10,8 @@ const CalendarDay = ({
   height,
   isEnabled = false,
   reminders = [],
-  handleModalOpen = () => {},
+  handleOpenReminder = () => {},
 }) => {
-  const dateString = `${day}.${month}.${year}`;
-
   return (
     <Card
       variant="outlined"
@@ -21,13 +21,20 @@ const CalendarDay = ({
           ? "calendar-day-card"
           : "calendar-day-card calendar-day-card--disabled"
       }
-      onClick={isEnabled ? () => handleModalOpen(dateString) : () => {}}
     >
       <CardContent className="calendar-day-content">
         <Grid item>
           <div className="calendar-day-header">
             <p className="calendar-day-text">{day}</p>
           </div>
+          <Stack spacing={0.2}>
+            {reminders.map((reminder) => (
+              <Reminder
+                reminder={reminder}
+                handleOpenReminder={handleOpenReminder}
+              ></Reminder>
+            ))}
+          </Stack>
         </Grid>
       </CardContent>
     </Card>
