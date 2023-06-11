@@ -24,7 +24,7 @@ const CalendarGrid = ({ date = new Date() }) => {
   const [openedReminder, setOpenedReminder] = useState(null);
   const handleOpenReminder = (event, reminder) => {
     event.stopPropagation();
-    event.preventDefault();
+
     closeAllReminderCards();
     return setOpenedReminder(reminder);
   };
@@ -76,7 +76,6 @@ const CalendarGrid = ({ date = new Date() }) => {
   // useCloseOnClickOutside(keepReminderOpenRef, closeAllReminderCards);
 
   const updateReminder = (updatedReminder) => {
-    console.log("updating");
     const reminders = { ...monthReminders };
 
     const updatedDateString = buildDateString(updatedReminder.date);
@@ -148,7 +147,6 @@ const CalendarGrid = ({ date = new Date() }) => {
           keepReminderOpenRef={keepReminderOpenRef}
           reminder={openedReminder}
           handleCloseReminder={handleCloseReminder}
-          updateReminder={updateReminder}
           hasButton={true}
           buttonText="Update Reminder"
           onButtonClick={updateReminder}

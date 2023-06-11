@@ -5,13 +5,14 @@ import { useState } from "react";
 import IconText from "./IconText";
 import IconTextField from "./IconTextField";
 
-const IconTimePicker = ({ icon, value, onChange = () => {} }) => {
+const IconTimePicker = ({ icon, value, label, onChange = () => {} }) => {
   return (
     <div className="icon-input">
       <FontAwesomeIcon className="input-icon" icon={icon} />
       <TimeField
         variant="standard"
         value={value}
+        label={label}
         ampm={false}
         onChange={onChange}
       />

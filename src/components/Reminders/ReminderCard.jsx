@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   faCalendarDays,
@@ -27,6 +27,13 @@ const ReminderCard = ({
   const [time, setTime] = useState(reminder.time);
   const originalDate = reminder.date;
 
+  useEffect(() => {
+    setName(reminder.name);
+    setCity(reminder.city);
+    setDate(reminder.date);
+    setTime(reminder.time);
+  }, [reminder]);
+
   const handleNameChange = (newName) => {
     setName(newName);
   };
@@ -37,6 +44,12 @@ const ReminderCard = ({
     setTime(newTime);
   };
   const handleCityChange = (newCity) => {
+    newCity = newCity ?? {
+      label: "",
+      name: "",
+      key: null,
+      country: "",
+    };
     setCity(newCity);
   };
 
@@ -77,6 +90,7 @@ const ReminderCard = ({
             <IconDatePicker
               icon={faCalendarDays}
               value={date}
+              label="Date"
               onChange={(newValue) => {
                 handleDateChange(newValue);
               }}
@@ -84,6 +98,7 @@ const ReminderCard = ({
             <IconTimePicker
               value={time}
               icon={faClock}
+              label="Time"
               onChange={(newValue) => {
                 handleTimeChange(newValue);
               }}
@@ -95,6 +110,7 @@ const ReminderCard = ({
               keepReminderOpenRef={keepReminderOpenRef}
               icon={faLocationDot}
               value={city}
+              label="City"
               showInputLabels={showInputLabels}
               onChange={handleCityChange}
             />

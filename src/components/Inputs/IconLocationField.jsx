@@ -5,8 +5,9 @@ import { Autocomplete, TextField } from "@mui/material";
 import { fetchLocations } from "services/Api/WeatherApi";
 
 const IconCityField = ({
-  value = "",
+  value,
   icon,
+  label,
   showInputLabels,
   keepReminderOpenRef,
   onChange,
@@ -14,6 +15,11 @@ const IconCityField = ({
   const [city, setCity] = useState(value);
   const [inputCity, setInputCity] = useState(value.label);
   const [cityResults, setCityResults] = useState([value]);
+
+  useEffect(() => {
+    setCity(value);
+    setInputCity(value.label);
+  }, [value]);
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -55,7 +61,7 @@ const IconCityField = ({
         onChange={(event, newValue) => handleCityChange(event, newValue)}
         onInputChange={(event, newInputValue) => setInputCity(newInputValue)}
         renderInput={(params) => (
-          <TextField ref={keepReminderOpenRef} variant="standard" {...params} />
+          <TextField label={label} variant="standard" {...params} />
         )}
       />
     </div>
