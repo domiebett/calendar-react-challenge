@@ -16,9 +16,9 @@ const IconCityField = ({ value, icon, label, onChange }) => {
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
-      fetchLocations(inputCity).then((results = []) => {
+      fetchLocations(inputCity).then((results) => {
         const resultMap = new Map();
-        for (let result of results) {
+        for (let result of results ?? []) {
           const label = `${result.EnglishName}, ${result.Country.EnglishName}`;
           if (resultMap.has(label)) {
             continue;

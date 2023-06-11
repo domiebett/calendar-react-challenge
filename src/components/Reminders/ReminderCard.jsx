@@ -76,7 +76,7 @@ const ReminderCard = ({
             label={showInputLabels ? "Name" : ""}
             placeholder="Name your reminder"
             inputProps={{
-              style: { fontSize: "2em", width: 415 },
+              style: { fontSize: "1.7em", width: 415 },
               maxLength: 30,
             }}
             autoFocus={autofocus}
@@ -119,7 +119,11 @@ const ReminderCard = ({
 
         {hasButton && (
           <div className="buttons">
-            <Button variant="contained" onClick={() => handleButtonClick()}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleButtonClick()}
+            >
               {buttonText}
             </Button>
           </div>

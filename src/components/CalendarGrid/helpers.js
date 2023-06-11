@@ -25,54 +25,31 @@ export const getRowHeightFromCurrentMonth = (amountOfDays) => {
 
 export const uuid = () => Math.random().toString(16).slice(2);
 
-export const getSampleReminders = () => {
-  return {
-    "9/6/2023": [
-      {
-        id: uuid(),
-        name: "Reminder One",
-        time: dayjs("10:56", "HH:mm"),
-        date: dayjs("9/6/2023", "D/M/YYYY"),
-        city: {
-          country: "Kenya",
-          key: "224758",
-          label: "Nairobi, Kenya",
-          name: "Nairobi",
-        },
-        weather: "sunny",
-      },
-      {
-        id: uuid(),
-        name: "Reminder Two",
-        time: dayjs("13:00", "HH:MM"),
-        date: dayjs("9/6/2023", "D/M/YYYY"),
-        city: {
-          country: "Kenya",
-          key: "224758",
-          label: "Nairobi, Kenya",
-          name: "Nairobi",
-        },
-        weather: "cloudy",
-      },
-    ],
-    "12/6/2023": [
-      {
-        id: uuid(),
-        name: "Reminder One",
-        time: dayjs("09:00", "HH:MM"),
-        date: dayjs("12/6/2023", "D/M/YYYY"),
-        city: {
-          country: "Kenya",
-          key: "224758",
-          label: "Nairobi, Kenya",
-          name: "Nairobi",
-        },
-        weather: "windy",
-      },
-    ],
-  };
-};
-
 export const buildDateString = (date) => {
   return date.format("D/M/YYYY");
+};
+
+export const saveReminders = (reminders) => {
+  return window.localStorage.setItem(
+    "monthReminders",
+    JSON.stringify(reminders)
+  );
+};
+
+export const getReminders = () => {
+  const reminders = window.localStorage.getItem("monthReminders") ?? "{}";
+  const parsedReminders = JSON.parse(reminders);
+
+  for (let key in parsedReminders) {
+    const cleanedReminders = parsedReminders[key].map((reminder) => {
+      reminder["date"] = dayjs(reminder["date"]);
+      reminder["time"] = dayjs(reminder["time"]);
+
+      return reminder;
+    });
+
+    parsedReminders[key] = cleanedReminders;
+  }
+
+  return parsedReminders;
 };

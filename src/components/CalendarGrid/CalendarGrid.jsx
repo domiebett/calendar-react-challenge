@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Grid } from "@material-ui/core";
 import { CalendarHeader, CalendarDay } from "components";
@@ -10,15 +10,20 @@ import { getCurrentMonthCalendarizableDays } from "utils/dateUtils";
 
 import {
   buildDateString,
+  getReminders,
   getRowHeightFromCurrentMonth,
-  getSampleReminders,
+  saveReminders,
 } from "./helpers";
 
 const CalendarGrid = ({ date = new Date() }) => {
   const calendarDays = getCurrentMonthCalendarizableDays(date);
   const gridRowHeight = getRowHeightFromCurrentMonth(calendarDays?.length);
 
-  const [monthReminders, setMonthReminders] = useState(getSampleReminders());
+  const [monthReminders, setMonthReminders] = useState(getReminders());
+
+  useEffect(() => {
+    saveReminders(monthReminders);
+  }, [monthReminders]);
 
   const [openedReminder, setOpenedReminder] = useState(null);
   const handleOpenReminder = (event, reminder) => {
@@ -119,12 +124,14 @@ const CalendarGrid = ({ date = new Date() }) => {
               : dayjs(`${day.number}/${day.month}/${day.year}`, "D/M/YYYY");
 
           const dateString = buildDateString(date);
+          const isWeekend = date.day() === 0 || date.day === 6;
 
           return (
             <CalendarDay
               key={`${day.number}.${day.month}.${day.year}`}
               date={date}
               isEnabled={day.isEnabled}
+              isWeekend={isWeekend}
               height={gridRowHeight}
               reminders={monthReminders[dateString]}
               handleOpenReminder={handleOpenReminder}
