@@ -17,6 +17,14 @@
         background: $bg-color-secondary;
       }
     }
+
+    &--weekend {
+      background-color: $bg-color-secondary !important;
+
+      &:hover {
+        background: $bg-color-secondary;
+      }
+    }
   }
 
   &-header {
@@ -34,5 +42,16 @@
     text-align: "center";
     font-size: $font-size-extra-small;
     margin-top: $padding-medium;
+  }
+  &-reminder-name {
+    width: 100%;
+    background-color: #9AC5F4;
+    color: white;
+    padding: 0.1em;
+    font-size: 0.75em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
   }
 }

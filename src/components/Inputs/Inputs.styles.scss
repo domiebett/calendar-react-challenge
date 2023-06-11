@@ -1,0 +1,23 @@
+.icon-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .input-icon {
+        margin-right: 1em;
+    }
+}
+
+.input-right-spacing {
+    margin-right: 6em;
+}
+
+.icon-weather {
+    width: 200px;
+    display: flex;
+    align-items: center;
+
+    .weather-icon {
+        margin-right: 1em;
+    }
+}

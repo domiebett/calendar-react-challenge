@@ -6,8 +6,9 @@
     justify-content: center;
     display: flex;
     flex-direction: column;
-    background-color: $bg-color-light-blue !important;
-    border-radius: $padding-extra-small;
+    background-color: $bg-color-primary-blue !important;
+    color: white !important;
+    border-radius: 0 !important;
     font-size: $font-size-regular;
     font-weight: 500;
   }
