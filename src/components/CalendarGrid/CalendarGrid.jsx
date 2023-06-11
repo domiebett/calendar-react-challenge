@@ -118,13 +118,13 @@ const CalendarGrid = ({ date = new Date() }) => {
       >
         <CalendarHeader />
         {calendarDays?.map((day) => {
-          const date =
-            day.number && !day.month
-              ? dayjs(`${day.number}/1/0001`, "D/M/YYYY")
-              : dayjs(`${day.number}/${day.month}/${day.year}`, "D/M/YYYY");
+          const date = dayjs(
+            `${day.number}/${day.month}/${day.year}`,
+            "D/M/YYYY"
+          );
 
           const dateString = buildDateString(date);
-          const isWeekend = date.day() === 0 || date.day === 6;
+          const isWeekend = date.day() === 0 || date.day() === 6;
 
           return (
             <CalendarDay
@@ -132,6 +132,7 @@ const CalendarGrid = ({ date = new Date() }) => {
               date={date}
               isEnabled={day.isEnabled}
               isWeekend={isWeekend}
+              isPreviousOrNextMonth={day.isPreviousOrNextMonth}
               height={gridRowHeight}
               reminders={monthReminders[dateString]}
               handleOpenReminder={handleOpenReminder}

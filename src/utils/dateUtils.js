@@ -26,6 +26,9 @@ export const getCurrentMonthCalendarizableDays = (date) => {
   const month = baseDate.format("M");
   const year = baseDate.format("YYYY");
 
+  const lastMonth = baseDate.subtract(1, "month");
+  const nextMonth = baseDate.add(1, "month");
+
   const amountOfDays = baseDate.daysInMonth() + 1;
   const weekdayOfFirstDayOfCurrentMonth = Number(
     baseDate.startOf("month").day()
@@ -38,8 +41,11 @@ export const getCurrentMonthCalendarizableDays = (date) => {
   if (weekdayOfFirstDayOfCurrentMonth > 0) {
     lastMonthDays = [...Array(weekdayOfFirstDayOfCurrentMonth)]
       .map((_, index) => ({
-        isEnabled: false,
+        isEnabled: true,
         number: lastDayOfPreviousMonth - index,
+        isPreviousOrNextMonth: true,
+        month: lastMonth.format("M"),
+        year: lastMonth.format("YYYY"),
       }))
       .reverse();
   }
@@ -57,7 +63,10 @@ export const getCurrentMonthCalendarizableDays = (date) => {
   const nextMonthAmount = DAYS_IN_WEEK - (calendarDays.length % DAYS_IN_WEEK);
   const nextMonthDays = [...Array(nextMonthAmount).keys()].map((day) => ({
     number: day + 1,
-    isEnabled: false,
+    isEnabled: true,
+    isPreviousOrNextMonth: true,
+    month: nextMonth.format("M"),
+    year: nextMonth.format("YYYY"),
   }));
 
   return calendarDays.concat(nextMonthDays);

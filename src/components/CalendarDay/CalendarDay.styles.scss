@@ -17,6 +17,14 @@
         background: $bg-color-secondary;
       }
     }
+
+    &--weekend {
+      background-color: $bg-color-secondary !important;
+
+      &:hover {
+        background: $bg-color-secondary;
+      }
+    }
   }
 
   &-header {

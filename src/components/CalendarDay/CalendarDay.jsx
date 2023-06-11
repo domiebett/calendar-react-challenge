@@ -7,25 +7,32 @@ const CalendarDay = ({
   date,
   height,
   isEnabled = false,
+  isWeekend = false,
   reminders = [],
+  isPreviousOrNextMonth = false,
   handleOpenReminder = () => {},
   handleOpenAddReminder = () => {},
 }) => {
+  const cardClassNames = `calendar-day-card ${
+    !isEnabled && "calendar-day-card--disabled"
+  } ${isWeekend && "calendar-day-card--weekend"}`;
+
   return (
     <Card
       onClick={(event) => isEnabled && handleOpenAddReminder(event, date)}
       variant="outlined"
       style={{ height }}
-      className={
-        isEnabled
-          ? "calendar-day-card"
-          : "calendar-day-card calendar-day-card--disabled"
-      }
+      className={cardClassNames}
     >
       <CardContent className="calendar-day-content">
         <Grid item>
           <div className="calendar-day-header">
-            <p className="calendar-day-text">{date.get("date")}</p>
+            <p className="calendar-day-text">
+              {}
+              {`${isPreviousOrNextMonth ? date.format("MMM") : ""} ${date.get(
+                "date"
+              )}`}
+            </p>
           </div>
           <Stack spacing={0.2}>
             {reminders.map((reminder, index) => (

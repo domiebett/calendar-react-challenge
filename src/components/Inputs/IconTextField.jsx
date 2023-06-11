@@ -14,6 +14,7 @@ const IconTextField = ({
         label={label || ""}
         variant="standard"
         value={value}
+        autoComplete="off"
         onChange={onChange}
       />
     </div>
