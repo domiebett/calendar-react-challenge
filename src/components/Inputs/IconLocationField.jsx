@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Autocomplete, TextField } from "@mui/material";
-import { fetchLocations } from "services/Api/WeatherApi";
+import { fetchLocations } from "services/Api/LocationApi";
 
 const IconCityField = ({
   value,
   icon,
   label,
-  showInputLabels,
   keepReminderOpenRef,
   onChange,
 }) => {

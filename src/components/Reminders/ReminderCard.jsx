@@ -115,7 +115,7 @@ const ReminderCard = ({
               onChange={handleCityChange}
             />
 
-            <IconWeather weather={reminder.weather} />
+            <IconWeather city={city} date={date} time={time} />
           </div>
         </Stack>
 

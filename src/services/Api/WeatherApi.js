@@ -1,11 +1,13 @@
-const API_HOST = "http://dataservice.accuweather.com/";
-const API_KEY = "AddlSLNxJZ0lsZCAUAjQXnmGlddJhPEI";
-const API_VERSION = "v1";
+const BASE_URL =
+  "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/";
+const API_KEY = "E8LWP5E8ABPPZT9TKNHS3DH9N";
 
-const getLocationApiUrl = (cityName) => {
-  return `${API_HOST}locations/${API_VERSION}/cities/search?apikey=${API_KEY}&q=${cityName}`;
+const getWeatherApiUrl = (cityName, date) => {
+  return `${BASE_URL}timeline/${cityName}/${date}/${date}?unitGroup=metric&key=${API_KEY}&contentType=json`;
 };
 
-export const fetchLocations = (cityName) => {
-  return fetch(getLocationApiUrl(cityName)).then((response) => response.json());
+export const fetchWeather = (cityName, date) => {
+  return fetch(getWeatherApiUrl(cityName, date)).then((response) =>
+    response.json()
+  );
 };
