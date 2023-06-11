@@ -1,11 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TextField } from "@material-ui/core";
 
-const IconTextField = ({ icon, value = "", onChange = () => {} }) => {
+const IconTextField = ({
+  icon,
+  value = "",
+  label = "",
+  onChange = () => {},
+}) => {
   return (
     <div className="icon-input">
       <FontAwesomeIcon icon={icon} />
-      <TextField variant="standard" value={value} onChange={onChange} />
+      <TextField
+        label={label || ""}
+        variant="standard"
+        value={value}
+        onChange={onChange}
+      />
     </div>
   );
 };

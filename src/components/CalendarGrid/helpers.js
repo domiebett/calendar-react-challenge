@@ -62,3 +62,7 @@ export const getSampleReminders = () => {
     ],
   };
 };
+
+export const buildDateString = (dateObj) => {
+  return `${dateObj.day}.${dateObj.month}.${dateObj.year}`;
+};

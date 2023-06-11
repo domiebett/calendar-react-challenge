@@ -14,6 +14,8 @@ import IconWeather from "components/Inputs/IconWeather";
 const ReminderCard = ({
   reminder,
   keepReminderOpenRef,
+  showInputLabels,
+  children,
   updateReminder = () => {},
 }) => {
   const reminderDate = `${reminder.day}/${reminder.month}/${reminder.year}`;
@@ -43,6 +45,8 @@ const ReminderCard = ({
           <TextField
             variant="standard"
             value={reminder.name}
+            label={showInputLabels ? "Name" : ""}
+            placeholder="Name your reminder"
             inputProps={{ style: { fontSize: "2em" } }}
             onChange={(event) =>
               handleReminderUpdate(event, "name", event.target.value)
@@ -64,6 +68,7 @@ const ReminderCard = ({
             <IconTextField
               icon={faLocationDot}
               value={reminder.city}
+              label={showInputLabels ? "City" : ""}
               onChange={(event) =>
                 handleReminderUpdate(event, "city", event.target.value)
               }
@@ -72,6 +77,8 @@ const ReminderCard = ({
             <IconWeather weather={reminder.weather} />
           </div>
         </Stack>
+
+        {children && <div className="buttons">{children}</div>}
       </CardContent>
     </Card>
   );

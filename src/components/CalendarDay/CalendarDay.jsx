@@ -12,9 +12,17 @@ const CalendarDay = ({
   isEnabled = false,
   reminders = [],
   handleOpenReminder = () => {},
+  handleOpenAddReminder = () => {},
 }) => {
+  const date = {
+    day,
+    month,
+    year,
+  };
+
   return (
     <Card
+      onClick={(event) => handleOpenAddReminder(event, date)}
       variant="outlined"
       style={{ height }}
       className={

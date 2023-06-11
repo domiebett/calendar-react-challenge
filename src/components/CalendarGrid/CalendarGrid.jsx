@@ -7,23 +7,75 @@ import PropTypes from "prop-types";
 import { getCurrentMonthCalendarizableDays } from "utils/dateUtils";
 import { useCloseOnClickOutside } from "utils/hooks";
 
-import { getRowHeightFromCurrentMonth, getSampleReminders } from "./helpers";
+import {
+  buildDateString,
+  getRowHeightFromCurrentMonth,
+  getSampleReminders,
+} from "./helpers";
+import AddReminderCard from "components/Reminders/AddReminderCard";
 
 const CalendarGrid = ({ date = new Date() }) => {
   const calendarDays = getCurrentMonthCalendarizableDays(date);
   const gridRowHeight = getRowHeightFromCurrentMonth(calendarDays?.length);
 
-  const [openedReminder, setOpenedReminder] = useState(null);
   const [monthReminders, setMonthReminders] = useState(getSampleReminders());
 
-  const handleOpenReminder = (reminder) => setOpenedReminder(reminder);
+  const [openedReminder, setOpenedReminder] = useState(null);
+  const handleOpenReminder = (event, reminder) => {
+    event.stopPropagation();
+    event.preventDefault();
+    closeAllReminderCards();
+    return setOpenedReminder(reminder);
+  };
   const handleCloseReminder = () => setOpenedReminder(null);
 
+  const closeAllReminderCards = () => {
+    setOpenedReminder(null);
+    setOpenAddReminder({
+      open: false,
+      date: null,
+    });
+  };
+
+  const [openAddReminder, setOpenAddReminder] = useState({
+    open: false,
+    date: null,
+  });
+  const handleOpenAddReminder = (event, date) => {
+    event.stopPropagation();
+    if (openedReminder) {
+      closeAllReminderCards();
+      return;
+    }
+    setOpenAddReminder({
+      open: !(openAddReminder.open || openedReminder),
+      date: date,
+    });
+  };
+  const handleCloseAddReminder = () => {
+    setOpenAddReminder({ open: false, date });
+  };
+
+  const addReminder = (reminder) => {
+    const dateString = buildDateString(reminder);
+    const reminders = { ...monthReminders };
+
+    if (reminders[dateString]) {
+      reminders[dateString].push(reminder);
+    } else {
+      reminders[dateString] = [reminder];
+    }
+
+    setMonthReminders(reminders);
+
+    closeAllReminderCards();
+  };
+
   const keepReminderOpenRef = useRef();
-  useCloseOnClickOutside(keepReminderOpenRef, handleCloseReminder);
+  useCloseOnClickOutside(keepReminderOpenRef, closeAllReminderCards);
 
   const updateReminder = (updatedReminder) => {
-    const reminderDate = `${updatedReminder.day}.${updatedReminder.month}.${updatedReminder.year}`;
+    const reminderDate = buildDateString(updatedReminder);
     const reminders = { ...monthReminders };
 
     const dateReminders = reminders[reminderDate].map((reminder) => {
@@ -58,6 +110,7 @@ const CalendarGrid = ({ date = new Date() }) => {
               height={gridRowHeight}
               reminders={monthReminders[dateString]}
               handleOpenReminder={handleOpenReminder}
+              handleOpenAddReminder={handleOpenAddReminder}
             />
           );
         })}
@@ -70,6 +123,13 @@ const CalendarGrid = ({ date = new Date() }) => {
           handleCloseReminder={handleCloseReminder}
           updateReminder={updateReminder}
         ></ReminderCard>
+      )}
+
+      {openAddReminder.open && (
+        <AddReminderCard
+          date={openAddReminder.date}
+          addReminder={addReminder}
+        ></AddReminderCard>
       )}
     </>
   );
