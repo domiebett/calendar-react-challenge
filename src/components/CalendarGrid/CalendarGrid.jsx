@@ -7,7 +7,6 @@ import ReminderCard from "components/Reminders/ReminderCard";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { getCurrentMonthCalendarizableDays } from "utils/dateUtils";
-import { useCloseOnClickOutside } from "utils/hooks";
 
 import {
   buildDateString,
@@ -53,9 +52,6 @@ const CalendarGrid = ({ date = new Date() }) => {
       date: date,
     });
   };
-  const handleCloseAddReminder = () => {
-    setOpenAddReminder({ open: false, date });
-  };
 
   const addReminder = (reminder) => {
     const dateString = buildDateString(reminder.date);
@@ -72,9 +68,6 @@ const CalendarGrid = ({ date = new Date() }) => {
     closeAllReminderCards();
   };
 
-  const keepReminderOpenRef = useRef();
-  // useCloseOnClickOutside(keepReminderOpenRef, closeAllReminderCards);
-
   const updateReminder = (updatedReminder) => {
     const reminders = { ...monthReminders };
 
@@ -83,6 +76,11 @@ const CalendarGrid = ({ date = new Date() }) => {
 
     const unEditedReminders = reminders[originalDateString].filter(
       (reminder) => {
+        console.log(
+          reminder.id !== updatedReminder.id,
+          reminder.id,
+          updatedReminder.id
+        );
         return reminder.id !== updatedReminder.id;
       }
     );
@@ -129,7 +127,6 @@ const CalendarGrid = ({ date = new Date() }) => {
 
           return (
             <CalendarDay
-              keepReminderOpenRef={keepReminderOpenRef}
               key={`${day.number}.${day.month}.${day.year}`}
               date={date}
               isEnabled={day.isEnabled}
@@ -144,7 +141,6 @@ const CalendarGrid = ({ date = new Date() }) => {
 
       {openedReminder && (
         <ReminderCard
-          keepReminderOpenRef={keepReminderOpenRef}
           reminder={openedReminder}
           handleCloseReminder={handleCloseReminder}
           hasButton={true}

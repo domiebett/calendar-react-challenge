@@ -4,13 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Autocomplete, TextField } from "@mui/material";
 import { fetchLocations } from "services/Api/LocationApi";
 
-const IconCityField = ({
-  value,
-  icon,
-  label,
-  keepReminderOpenRef,
-  onChange,
-}) => {
+const IconCityField = ({ value, icon, label, onChange }) => {
   const [city, setCity] = useState(value);
   const [inputCity, setInputCity] = useState(value.label);
   const [cityResults, setCityResults] = useState([value]);
@@ -50,7 +44,7 @@ const IconCityField = ({
   };
 
   return (
-    <div ref={keepReminderOpenRef} className="icon-input">
+    <div className="icon-input">
       <FontAwesomeIcon className="input-icon" icon={icon} />
       <Autocomplete
         options={cityResults}

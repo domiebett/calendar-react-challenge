@@ -14,7 +14,6 @@ import IconWeather from "components/Inputs/IconWeather";
 
 const ReminderCard = ({
   reminder,
-  keepReminderOpenRef,
   showInputLabels,
   autofocus = false,
   hasButton,
@@ -55,6 +54,7 @@ const ReminderCard = ({
 
   const handleButtonClick = () => {
     const updatedReminder = {
+      id: reminder.id,
       name: name,
       city: city,
       date: date,
@@ -67,11 +67,7 @@ const ReminderCard = ({
   };
 
   return (
-    <Card
-      ref={keepReminderOpenRef}
-      variant="elevation"
-      className="reminder-card"
-    >
+    <Card variant="elevation" className="reminder-card">
       <CardContent>
         <div className="reminder-card-name">
           <TextField
@@ -107,7 +103,6 @@ const ReminderCard = ({
 
           <div className="reminder-card-horizontal">
             <IconCityField
-              keepReminderOpenRef={keepReminderOpenRef}
               icon={faLocationDot}
               value={city}
               label="City"

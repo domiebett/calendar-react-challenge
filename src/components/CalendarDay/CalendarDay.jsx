@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 const CalendarDay = ({
   date,
   height,
-  keepReminderOpenRef,
   isEnabled = false,
   reminders = [],
   handleOpenReminder = () => {},
@@ -14,7 +13,7 @@ const CalendarDay = ({
 }) => {
   return (
     <Card
-      onClick={(event) => handleOpenAddReminder(event, date)}
+      onClick={(event) => isEnabled && handleOpenAddReminder(event, date)}
       variant="outlined"
       style={{ height }}
       className={
@@ -31,10 +30,9 @@ const CalendarDay = ({
           <Stack spacing={0.2}>
             {reminders.map((reminder, index) => (
               <Reminder
-                keepReminderOpenRef={keepReminderOpenRef}
                 key={index}
                 reminder={reminder}
-                handleOpenReminder={handleOpenReminder}
+                handleOpenReminder={isEnabled && handleOpenReminder}
               ></Reminder>
             ))}
           </Stack>
