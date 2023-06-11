@@ -9,7 +9,7 @@ const IconTextField = ({
 }) => {
   return (
     <div className="icon-input">
-      <FontAwesomeIcon icon={icon} />
+      <FontAwesomeIcon className="input-icon" icon={icon} />
       <TextField
         label={label || ""}
         variant="standard"

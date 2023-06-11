@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 
 import ReminderCard from "./ReminderCard";
 
-const AddReminderCard = ({ date, keepReminderOpenRef, addReminder }) => {
+const AddReminderCard = ({ date, addReminder }) => {
   const baseReminder = {
     id: uuid(),
     name: "",
@@ -15,7 +15,12 @@ const AddReminderCard = ({ date, keepReminderOpenRef, addReminder }) => {
     day: date.day,
     month: date.month,
     year: date.year,
-    city: "",
+    city: {
+      label: "",
+      name: "",
+      key: null,
+      country: "",
+    },
     weather: "sunny",
   };
 
@@ -32,21 +37,13 @@ const AddReminderCard = ({ date, keepReminderOpenRef, addReminder }) => {
   return (
     <ReminderCard
       reminder={reminder}
-      keepReminderOpenRef={keepReminderOpenRef}
       updateReminder={handleReminderUpdate}
       showInputLabels={true}
       autofocus={true}
-    >
-      <Button
-        onClick={() => {
-          handleReminderAdd(reminder);
-        }}
-        variant="contained"
-        disabled={false}
-      >
-        Add Reminder
-      </Button>
-    </ReminderCard>
+      hasButton={true}
+      buttonText={"Add Reminder"}
+      onButtonClick={handleReminderAdd}
+    ></ReminderCard>
   );
 };
 

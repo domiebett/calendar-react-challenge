@@ -8,7 +8,7 @@ import IconTextField from "./IconTextField";
 const IconTimePicker = ({ icon, value, onChange = () => {} }) => {
   return (
     <div className="icon-input">
-      <FontAwesomeIcon icon={icon} />
+      <FontAwesomeIcon className="input-icon" icon={icon} />
       <TimeField
         variant="standard"
         value={value}

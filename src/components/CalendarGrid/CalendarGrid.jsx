@@ -73,38 +73,41 @@ const CalendarGrid = ({ date = new Date() }) => {
   };
 
   const keepReminderOpenRef = useRef();
-  useCloseOnClickOutside(keepReminderOpenRef, closeAllReminderCards);
+  // useCloseOnClickOutside(keepReminderOpenRef, closeAllReminderCards);
 
-  const updateReminder = (updatedReminder, currentDate) => {
+  const updateReminder = (updatedReminder) => {
+    console.log("updating");
     const reminders = { ...monthReminders };
+
     const updatedDateString = buildDateString(updatedReminder.date);
-    const currentDateString = buildDateString(currentDate);
+    const originalDateString = buildDateString(updatedReminder.originalDate);
 
-    let reminderIndex = null;
-    reminders[currentDateString].forEach((reminder, index) => {
-      if (reminder.id === updatedReminder.id) {
-        reminderIndex = index;
+    const unEditedReminders = reminders[originalDateString].filter(
+      (reminder) => {
+        return reminder.id !== updatedReminder.id;
       }
-    });
+    );
 
-    if (reminderIndex === null) {
-      return;
-    }
+    const cleanedReminderUpdate = {
+      name: updatedReminder.name,
+      time: updatedReminder.time,
+      date: updatedReminder.date,
+      city: updatedReminder.city,
+    };
 
-    if (updatedDateString !== currentDateString) {
-      reminders[currentDateString].splice(reminderIndex, 1);
-      if (reminders[updatedDateString]) {
-        reminders[updatedDateString].push(updatedReminder);
-      } else {
-        reminders[updatedDateString] = [updatedReminder];
-      }
+    if (updatedDateString === originalDateString) {
+      unEditedReminders.push(cleanedReminderUpdate);
     } else {
-      reminders[currentDateString][reminderIndex] = updatedReminder;
+      reminders[updatedDateString]
+        ? reminders[updatedDateString].push(cleanedReminderUpdate)
+        : (reminders[updatedDateString] = [cleanedReminderUpdate]);
     }
 
-    setOpenedReminder(updatedReminder);
+    reminders[originalDateString] = unEditedReminders;
 
-    return setMonthReminders(reminders);
+    setMonthReminders(reminders);
+
+    closeAllReminderCards();
   };
 
   return (
@@ -146,6 +149,9 @@ const CalendarGrid = ({ date = new Date() }) => {
           reminder={openedReminder}
           handleCloseReminder={handleCloseReminder}
           updateReminder={updateReminder}
+          hasButton={true}
+          buttonText="Update Reminder"
+          onButtonClick={updateReminder}
         ></ReminderCard>
       )}
 

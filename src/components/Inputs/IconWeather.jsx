@@ -17,7 +17,10 @@ const IconWeather = ({ weather }) => {
   return (
     <div>
       {weatherIconMap[weather] && (
-        <FontAwesomeIcon icon={weatherIconMap[weather]} />
+        <FontAwesomeIcon
+          className="input-icon"
+          icon={weatherIconMap[weather]}
+        />
       )}
     </div>
   );

@@ -5,10 +5,10 @@ import {
   faClock,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { Card, CardContent } from "@material-ui/core";
+import { Button, Card, CardContent } from "@material-ui/core";
 import { Stack, TextField } from "@mui/material";
 import { IconDatePicker } from "components/Inputs/IconDatePicker";
-import IconTextField from "components/Inputs/IconTextField";
+import IconCityField from "components/Inputs/IconLocationField";
 import IconTimePicker from "components/Inputs/IconTimePicker";
 import IconWeather from "components/Inputs/IconWeather";
 
@@ -16,28 +16,41 @@ const ReminderCard = ({
   reminder,
   keepReminderOpenRef,
   showInputLabels,
-  children,
   autofocus = false,
-  updateReminder = () => {},
+  hasButton,
+  buttonText = "Submit",
+  onButtonClick,
 }) => {
   const [name, setName] = useState(reminder.name);
   const [city, setCity] = useState(reminder.city);
   const [date, setDate] = useState(reminder.date);
   const [time, setTime] = useState(reminder.time);
+  const originalDate = reminder.date;
 
-  const inputStateMap = {
-    name: setName,
-    city: setCity,
-    date: setDate,
-    time: setTime,
+  const handleNameChange = (newName) => {
+    setName(newName);
+  };
+  const handleDateChange = (newDate) => {
+    setDate(newDate);
+  };
+  const handleTimeChange = (newTime) => {
+    setTime(newTime);
+  };
+  const handleCityChange = (newCity) => {
+    setCity(newCity);
   };
 
-  const handleReminderUpdate = (changedField, value) => {
-    const currentDate = reminder.date;
-    inputStateMap[changedField](value);
-    const updatedReminder = { ...reminder };
-    updatedReminder[changedField] = value;
-    updateReminder(updatedReminder, currentDate);
+  const handleButtonClick = () => {
+    const updatedReminder = {
+      name: name,
+      city: city,
+      date: date,
+      time: time,
+      weather: reminder.weather,
+      originalDate,
+    };
+
+    onButtonClick(updatedReminder);
   };
 
   return (
@@ -50,14 +63,12 @@ const ReminderCard = ({
         <div className="reminder-card-name">
           <TextField
             variant="standard"
-            value={reminder.name}
+            value={name}
             label={showInputLabels ? "Name" : ""}
             placeholder="Name your reminder"
             inputProps={{ style: { fontSize: "2em", width: "100%" } }}
             autoFocus={autofocus}
-            onChange={(event) =>
-              handleReminderUpdate("name", event.target.value)
-            }
+            onChange={(event) => handleNameChange(event.target.value)}
           />
         </div>
 
@@ -65,35 +76,40 @@ const ReminderCard = ({
           <div className="reminder-card-horizontal">
             <IconDatePicker
               icon={faCalendarDays}
-              value={reminder.date}
+              value={date}
               onChange={(newValue) => {
-                handleReminderUpdate("date", newValue);
+                handleDateChange(newValue);
               }}
             />
             <IconTimePicker
-              value={reminder.time}
+              value={time}
               icon={faClock}
               onChange={(newValue) => {
-                handleReminderUpdate("time", newValue);
+                handleTimeChange(newValue);
               }}
             />
           </div>
 
           <div className="reminder-card-horizontal">
-            <IconTextField
+            <IconCityField
+              keepReminderOpenRef={keepReminderOpenRef}
               icon={faLocationDot}
-              value={reminder.city}
-              label={showInputLabels ? "City" : ""}
-              onChange={(event) =>
-                handleReminderUpdate("city", event.target.value)
-              }
+              value={city}
+              showInputLabels={showInputLabels}
+              onChange={handleCityChange}
             />
 
             <IconWeather weather={reminder.weather} />
           </div>
         </Stack>
 
-        {children && <div className="buttons">{children}</div>}
+        {hasButton && (
+          <div className="buttons">
+            <Button variant="contained" onClick={() => handleButtonClick()}>
+              {buttonText}
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
