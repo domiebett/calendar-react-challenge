@@ -1,13 +1,17 @@
+import { useState } from "react";
+
 import { Button } from "@material-ui/core";
 import { uuid } from "components/CalendarGrid/helpers";
+import dayjs from "dayjs";
 
 import ReminderCard from "./ReminderCard";
 
 const AddReminderCard = ({ date, keepReminderOpenRef, addReminder }) => {
-  let reminder = {
+  const baseReminder = {
     id: uuid(),
     name: "",
-    time: "8:00",
+    time: dayjs("08:00", "HH:MM"),
+    date: date,
     day: date.day,
     month: date.month,
     year: date.year,
@@ -15,8 +19,10 @@ const AddReminderCard = ({ date, keepReminderOpenRef, addReminder }) => {
     weather: "sunny",
   };
 
-  const handleReminderUpdate = (updatedReminder) => {
-    reminder = updatedReminder;
+  const [reminder, setReminder] = useState(baseReminder);
+
+  const handleReminderUpdate = (updatedReminder, currentDate) => {
+    setReminder(updatedReminder);
   };
 
   const handleReminderAdd = (reminder) => {
@@ -29,6 +35,7 @@ const AddReminderCard = ({ date, keepReminderOpenRef, addReminder }) => {
       keepReminderOpenRef={keepReminderOpenRef}
       updateReminder={handleReminderUpdate}
       showInputLabels={true}
+      autofocus={true}
     >
       <Button
         onClick={() => {

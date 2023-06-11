@@ -1,4 +1,7 @@
 .icon-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     svg {
         margin-right: 1em;
     }

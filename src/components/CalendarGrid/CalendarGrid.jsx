@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Grid } from "@material-ui/core";
 import { CalendarHeader, CalendarDay } from "components";
+import AddReminderCard from "components/Reminders/AddReminderCard";
 import ReminderCard from "components/Reminders/ReminderCard";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { getCurrentMonthCalendarizableDays } from "utils/dateUtils";
 import { useCloseOnClickOutside } from "utils/hooks";
@@ -12,7 +14,6 @@ import {
   getRowHeightFromCurrentMonth,
   getSampleReminders,
 } from "./helpers";
-import AddReminderCard from "components/Reminders/AddReminderCard";
 
 const CalendarGrid = ({ date = new Date() }) => {
   const calendarDays = getCurrentMonthCalendarizableDays(date);
@@ -57,7 +58,7 @@ const CalendarGrid = ({ date = new Date() }) => {
   };
 
   const addReminder = (reminder) => {
-    const dateString = buildDateString(reminder);
+    const dateString = buildDateString(reminder.date);
     const reminders = { ...monthReminders };
 
     if (reminders[dateString]) {
@@ -74,15 +75,34 @@ const CalendarGrid = ({ date = new Date() }) => {
   const keepReminderOpenRef = useRef();
   useCloseOnClickOutside(keepReminderOpenRef, closeAllReminderCards);
 
-  const updateReminder = (updatedReminder) => {
-    const reminderDate = buildDateString(updatedReminder);
+  const updateReminder = (updatedReminder, currentDate) => {
     const reminders = { ...monthReminders };
+    const updatedDateString = buildDateString(updatedReminder.date);
+    const currentDateString = buildDateString(currentDate);
 
-    const dateReminders = reminders[reminderDate].map((reminder) => {
-      return reminder.id === updatedReminder.id ? updatedReminder : reminder;
+    let reminderIndex = null;
+    reminders[currentDateString].forEach((reminder, index) => {
+      if (reminder.id === updatedReminder.id) {
+        reminderIndex = index;
+      }
     });
 
-    reminders[reminderDate] = dateReminders;
+    if (reminderIndex === null) {
+      return;
+    }
+
+    if (updatedDateString !== currentDateString) {
+      reminders[currentDateString].splice(reminderIndex, 1);
+      if (reminders[updatedDateString]) {
+        reminders[updatedDateString].push(updatedReminder);
+      } else {
+        reminders[updatedDateString] = [updatedReminder];
+      }
+    } else {
+      reminders[currentDateString][reminderIndex] = updatedReminder;
+    }
+
+    setOpenedReminder(updatedReminder);
 
     return setMonthReminders(reminders);
   };
@@ -98,14 +118,18 @@ const CalendarGrid = ({ date = new Date() }) => {
       >
         <CalendarHeader />
         {calendarDays?.map((day) => {
-          const dateString = `${day.number}.${day.month}.${day.year}`;
+          const date =
+            day.number && !day.month
+              ? dayjs(`${day.number}/1/0001`, "D/M/YYYY")
+              : dayjs(`${day.number}/${day.month}/${day.year}`, "D/M/YYYY");
+
+          const dateString = buildDateString(date);
+
           return (
             <CalendarDay
               keepReminderOpenRef={keepReminderOpenRef}
               key={`${day.number}.${day.month}.${day.year}`}
-              day={day.number}
-              month={day.month}
-              year={day.year}
+              date={date}
               isEnabled={day.isEnabled}
               height={gridRowHeight}
               reminders={monthReminders[dateString]}

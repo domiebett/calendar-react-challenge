@@ -1,4 +1,5 @@
 import { DAYS_IN_WEEK } from "constants";
+import dayjs from "dayjs";
 
 const CALENDAR_ROW_HEIGHT = {
   SMALL: "13.3vh",
@@ -26,11 +27,12 @@ export const uuid = () => Math.random().toString(16).slice(2);
 
 export const getSampleReminders = () => {
   return {
-    "9.6.2023": [
+    "9/6/2023": [
       {
         id: uuid(),
         name: "Reminder One",
-        time: "10:56",
+        time: dayjs("10:56", "HH:mm"),
+        date: dayjs("9/6/2023", "D/M/YYYY"),
         day: 9,
         month: 6,
         year: 2023,
@@ -40,7 +42,8 @@ export const getSampleReminders = () => {
       {
         id: uuid(),
         name: "Reminder Two",
-        time: "13:00",
+        time: dayjs("13:00", "HH:MM"),
+        date: dayjs("9/6/2023", "D/M/YYYY"),
         day: 9,
         month: 6,
         year: 2023,
@@ -48,11 +51,12 @@ export const getSampleReminders = () => {
         weather: "cloudy",
       },
     ],
-    "12.6.2023": [
+    "12/6/2023": [
       {
         id: uuid(),
         name: "Reminder One",
-        time: "09:00",
+        time: dayjs("09:00", "HH:MM"),
+        date: dayjs("12/6/2023", "D/M/YYYY"),
         day: 12,
         month: 6,
         year: 2023,
@@ -63,6 +67,6 @@ export const getSampleReminders = () => {
   };
 };
 
-export const buildDateString = (dateObj) => {
-  return `${dateObj.day}.${dateObj.month}.${dateObj.year}`;
+export const buildDateString = (date) => {
+  return date.format("D/M/YYYY");
 };

@@ -8,17 +8,15 @@
   &-horizontal {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: center;
     max-width: 448px;
   }
 
   &-content {
-    svg {
-      margin-right: 1em;
-    }
-  }
-
-  &-date {
-    margin-right: 5em;
+    display: grid;
+    grid-template-rows: auto auto;
   }
 
   &-name {

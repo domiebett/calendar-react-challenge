@@ -4,9 +4,7 @@ import Reminder from "components/Reminders/Reminder";
 import PropTypes from "prop-types";
 
 const CalendarDay = ({
-  day,
-  month,
-  year,
+  date,
   height,
   keepReminderOpenRef,
   isEnabled = false,
@@ -14,12 +12,6 @@ const CalendarDay = ({
   handleOpenReminder = () => {},
   handleOpenAddReminder = () => {},
 }) => {
-  const date = {
-    day,
-    month,
-    year,
-  };
-
   return (
     <Card
       onClick={(event) => handleOpenAddReminder(event, date)}
@@ -34,7 +26,7 @@ const CalendarDay = ({
       <CardContent className="calendar-day-content">
         <Grid item>
           <div className="calendar-day-header">
-            <p className="calendar-day-text">{day}</p>
+            <p className="calendar-day-text">{date.get("date")}</p>
           </div>
           <Stack spacing={0.2}>
             {reminders.map((reminder, index) => (
@@ -53,9 +45,6 @@ const CalendarDay = ({
 };
 
 CalendarDay.propTypes = {
-  day: PropTypes.number.isRequired,
-  month: PropTypes.string,
-  year: PropTypes.string,
   height: PropTypes.string.isRequired,
   isEnabled: PropTypes.bool,
   handleModalOpen: PropTypes.func,

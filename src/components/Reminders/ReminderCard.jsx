@@ -7,8 +7,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardContent } from "@material-ui/core";
 import { Stack, TextField } from "@mui/material";
-import IconText from "components/Inputs/IconText";
+import { IconDatePicker } from "components/Inputs/IconDatePicker";
 import IconTextField from "components/Inputs/IconTextField";
+import IconTimePicker from "components/Inputs/IconTimePicker";
 import IconWeather from "components/Inputs/IconWeather";
 
 const ReminderCard = ({
@@ -16,22 +17,27 @@ const ReminderCard = ({
   keepReminderOpenRef,
   showInputLabels,
   children,
+  autofocus = false,
   updateReminder = () => {},
 }) => {
-  const reminderDate = `${reminder.day}/${reminder.month}/${reminder.year}`;
   const [name, setName] = useState(reminder.name);
   const [city, setCity] = useState(reminder.city);
+  const [date, setDate] = useState(reminder.date);
+  const [time, setTime] = useState(reminder.time);
 
   const inputStateMap = {
     name: setName,
     city: setCity,
+    date: setDate,
+    time: setTime,
   };
 
-  const handleReminderUpdate = (event, changedField, value) => {
+  const handleReminderUpdate = (changedField, value) => {
+    const currentDate = reminder.date;
     inputStateMap[changedField](value);
-    const updatedReminder = reminder;
+    const updatedReminder = { ...reminder };
     updatedReminder[changedField] = value;
-    updateReminder(updatedReminder);
+    updateReminder(updatedReminder, currentDate);
   };
 
   return (
@@ -47,21 +53,30 @@ const ReminderCard = ({
             value={reminder.name}
             label={showInputLabels ? "Name" : ""}
             placeholder="Name your reminder"
-            inputProps={{ style: { fontSize: "2em" } }}
+            inputProps={{ style: { fontSize: "2em", width: "100%" } }}
+            autoFocus={autofocus}
             onChange={(event) =>
-              handleReminderUpdate(event, "name", event.target.value)
+              handleReminderUpdate("name", event.target.value)
             }
           />
         </div>
 
         <Stack spacing={2}>
           <div className="reminder-card-horizontal">
-            <IconText
-              className="input-right-spacing"
+            <IconDatePicker
               icon={faCalendarDays}
-              text={reminderDate}
+              value={reminder.date}
+              onChange={(newValue) => {
+                handleReminderUpdate("date", newValue);
+              }}
             />
-            <IconText icon={faClock} text={reminder.time} />
+            <IconTimePicker
+              value={reminder.time}
+              icon={faClock}
+              onChange={(newValue) => {
+                handleReminderUpdate("time", newValue);
+              }}
+            />
           </div>
 
           <div className="reminder-card-horizontal">
@@ -70,7 +85,7 @@ const ReminderCard = ({
               value={reminder.city}
               label={showInputLabels ? "City" : ""}
               onChange={(event) =>
-                handleReminderUpdate(event, "city", event.target.value)
+                handleReminderUpdate("city", event.target.value)
               }
             />
 
