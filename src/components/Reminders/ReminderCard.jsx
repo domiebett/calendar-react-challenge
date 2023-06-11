@@ -75,7 +75,10 @@ const ReminderCard = ({
             value={name}
             label={showInputLabels ? "Name" : ""}
             placeholder="Name your reminder"
-            inputProps={{ style: { fontSize: "2em", width: "100%" } }}
+            inputProps={{
+              style: { fontSize: "2em", width: 415 },
+              maxLength: 30,
+            }}
             autoFocus={autofocus}
             onChange={(event) => handleNameChange(event.target.value)}
           />

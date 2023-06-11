@@ -6,6 +6,7 @@ export const IconDatePicker = ({ icon, value, label, onChange = () => {} }) => {
     <div className="icon-input">
       <FontAwesomeIcon className="input-icon" icon={icon} />
       <DateField
+        required={true}
         variant="standard"
         value={value}
         label={label}

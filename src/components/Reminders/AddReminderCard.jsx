@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { Button } from "@material-ui/core";
 import { uuid } from "components/CalendarGrid/helpers";
 import dayjs from "dayjs";
 

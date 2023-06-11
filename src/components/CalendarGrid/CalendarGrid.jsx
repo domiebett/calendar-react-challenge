@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 import { Grid } from "@material-ui/core";
 import { CalendarHeader, CalendarDay } from "components";
@@ -76,11 +76,6 @@ const CalendarGrid = ({ date = new Date() }) => {
 
     const unEditedReminders = reminders[originalDateString].filter(
       (reminder) => {
-        console.log(
-          reminder.id !== updatedReminder.id,
-          reminder.id,
-          updatedReminder.id
-        );
         return reminder.id !== updatedReminder.id;
       }
     );

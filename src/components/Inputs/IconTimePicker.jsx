@@ -1,15 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { StaticTimePicker, TimeField } from "@mui/x-date-pickers";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { useState } from "react";
-import IconText from "./IconText";
-import IconTextField from "./IconTextField";
+import { TimeField } from "@mui/x-date-pickers";
 
 const IconTimePicker = ({ icon, value, label, onChange = () => {} }) => {
   return (
     <div className="icon-input">
       <FontAwesomeIcon className="input-icon" icon={icon} />
       <TimeField
+        required={true}
         variant="standard"
         value={value}
         label={label}
