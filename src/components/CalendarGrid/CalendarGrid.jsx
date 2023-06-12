@@ -107,6 +107,18 @@ const CalendarGrid = ({ date = new Date() }) => {
     closeAllReminderCards();
   };
 
+  const deleteReminder = (date, reminderId) => {
+    const reminders = { ...monthReminders };
+    const dateString = buildDateString(date);
+    reminders[dateString] = reminders[dateString].filter((reminder) => {
+      return reminderId !== reminder.id;
+    });
+
+    closeAllReminderCards();
+
+    setMonthReminders(reminders);
+  };
+
   return (
     <>
       <Grid
@@ -148,7 +160,9 @@ const CalendarGrid = ({ date = new Date() }) => {
           handleCloseReminder={handleCloseReminder}
           hasButton={true}
           buttonText="Update Reminder"
+          showDeleteBtn={true}
           onButtonClick={updateReminder}
+          handleDelete={deleteReminder}
         ></ReminderCard>
       )}
 

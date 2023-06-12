@@ -5,6 +5,13 @@
   transform: translate(-50%, -50%);
   width: 448px;
 
+  &-actions {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 1.25em;
+  }
+
   &-horizontal {
     display: flex;
     flex-direction: row;

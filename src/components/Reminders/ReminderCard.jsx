@@ -4,14 +4,16 @@ import {
   faCalendarDays,
   faClock,
   faLocationDot,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button, Card, CardContent } from "@material-ui/core";
-import { Stack, TextField } from "@mui/material";
+import { CardHeader, Stack, TextField } from "@mui/material";
 import { IconDatePicker } from "components/Inputs/IconDatePicker";
 import IconCityField from "components/Inputs/IconLocationField";
 import IconTimePicker from "components/Inputs/IconTimePicker";
 import IconWeather from "components/Inputs/IconWeather";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ReminderCard = ({
   reminder,
@@ -20,6 +22,8 @@ const ReminderCard = ({
   hasButton,
   buttonText = "Submit",
   onButtonClick,
+  showDeleteBtn = false,
+  handleDelete = () => {},
 }) => {
   const [name, setName] = useState(reminder.name);
   const [city, setCity] = useState(reminder.city);
@@ -70,6 +74,14 @@ const ReminderCard = ({
   return (
     <Card variant="elevation" className="reminder-card">
       <CardContent>
+        {showDeleteBtn && (
+          <div className="reminder-card-actions">
+            <Button onClick={() => handleDelete(date, reminder.id)}>
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+          </div>
+        )}
+
         <div className="reminder-card-name">
           <TextField
             variant="standard"

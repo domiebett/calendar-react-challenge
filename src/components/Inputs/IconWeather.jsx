@@ -12,6 +12,10 @@ const IconWeather = ({ city, date, time }) => {
     const apiDate = date.format("YYYY-MM-DD");
     const hour = time.get("hour");
 
+    if (!cityName || !apiDate) {
+      return;
+    }
+
     return fetchWeather(cityName, apiDate)
       .then((result) => {
         const weather = result.days[0]["hours"][hour];
