@@ -11,6 +11,7 @@ import { IconDatePicker } from "components/Inputs/IconDatePicker";
 import IconCityField from "components/Inputs/IconLocationField";
 import IconTimePicker from "components/Inputs/IconTimePicker";
 import IconWeather from "components/Inputs/IconWeather";
+import PropTypes from "prop-types";
 
 const ReminderCard = ({
   reminder,
@@ -131,6 +132,15 @@ const ReminderCard = ({
       </CardContent>
     </Card>
   );
+};
+
+ReminderCard.propTypes = {
+  reminder: PropTypes.instanceOf(Object).isRequired,
+  showInputLabels: PropTypes.bool,
+  autofocus: PropTypes.bool,
+  hasButton: PropTypes.bool,
+  buttonText: PropTypes.string,
+  onButtonClick: PropTypes.func,
 };
 
 export default ReminderCard;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { weatherIcons } from "assets";
+import PropTypes from "prop-types";
 import { fetchWeather } from "services/Api/WeatherApi";
 
 const IconWeather = ({ city, date, time }) => {
@@ -39,6 +40,12 @@ const IconWeather = ({ city, date, time }) => {
       )}
     </>
   );
+};
+
+IconWeather.propTypes = {
+  city: PropTypes.instanceOf(Object).isRequired,
+  date: PropTypes.instanceOf(Object).isRequired,
+  time: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default IconWeather;

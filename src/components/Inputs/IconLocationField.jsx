@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Autocomplete, TextField } from "@mui/material";
+import PropTypes from "prop-types";
 import { fetchLocations } from "services/Api/LocationApi";
 
 const IconCityField = ({ value, icon, label, onChange }) => {
@@ -59,6 +60,13 @@ const IconCityField = ({ value, icon, label, onChange }) => {
       />
     </div>
   );
+};
+
+IconCityField.propTypes = {
+  value: PropTypes.instanceOf(Object).isRequired,
+  icon: PropTypes.instanceOf(Object).isRequired,
+  label: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export default IconCityField;

@@ -3,6 +3,8 @@ import { useState } from "react";
 import { uuid } from "components/CalendarGrid/helpers";
 import dayjs from "dayjs";
 
+import PropTypes from "prop-types";
+
 import ReminderCard from "./ReminderCard";
 
 const AddReminderCard = ({ date, addReminder }) => {
@@ -44,6 +46,11 @@ const AddReminderCard = ({ date, addReminder }) => {
       onButtonClick={handleReminderAdd}
     ></ReminderCard>
   );
+};
+
+AddReminderCard.propTypes = {
+  date: PropTypes.instanceOf(Object).isRequired,
+  addReminder: PropTypes.func.isRequired,
 };
 
 export default AddReminderCard;
