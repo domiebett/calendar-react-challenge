@@ -4,6 +4,7 @@
     min-height: 5vh;
     cursor: cell;
     background-color:  $bg-color-primary;
+    position: relative;
 
     &:hover {
       background: $bg-color-purple;
@@ -53,5 +54,35 @@
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;
+  }
+
+  &-more-content {
+    position: absolute;
+    background-color: white;
+    width: 200px;
+    max-height: 500px;
+    overflow: scroll;
+    z-index: 10;
+
+    .more-content-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 1em;
+      font-size: 1.25em;
+    }
+  }
+
+  &-show-more {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    button {
+      width: 100%;
+      border: none;
+    }
   }
 }

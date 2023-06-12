@@ -2,21 +2,19 @@ import { useEffect, useState } from "react";
 
 import {
   faCalendarDays,
-  faCheck,
   faClock,
   faLocationDot,
-  faTimes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, CardContent } from "@material-ui/core";
 import { Button, Stack, TextField } from "@mui/material";
+import ConfirmAction from "components/Confirm/ConfirmAction";
 import { IconDatePicker } from "components/Inputs/IconDatePicker";
 import IconCityField from "components/Inputs/IconLocationField";
 import IconTimePicker from "components/Inputs/IconTimePicker";
 import IconWeather from "components/Inputs/IconWeather";
 import PropTypes from "prop-types";
-import ConfirmAction from "components/Confirm/ConfirmAction";
 
 const ReminderCard = ({
   reminder,
