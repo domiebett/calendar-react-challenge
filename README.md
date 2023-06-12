@@ -1,46 +1,144 @@
-<div align="center">
-    <img src="https://git.jobsity.com/jobsity/react-interview-challenge/-/raw/main/public/jobsity-logo.png"/>
-</div>
+# Calendar App
 
-# React Interview Challenge
+This is a React.js application for a Calendar app that allows users to add and edit reminders.
 
-## Description
+## Features
 
-This project is designed to test your knowledge of front-end web technologies and assess your ability to create front-end UI products with attention to detail, cross-browser compatibility, standards, and reusability.
+- View a monthly calendar with clickable dates.
+- Add new reminders for specific dates.
+- Edit existing reminders.
+- Set reminders with a title, date, time and city.
+- View reminders on the calendar.
+- Delete reminders.
+- View the forecasted weather and temperature for a given city on the given date and time.
 
+## Installation
 
-## Assignment
+1. Clone the repository:
 
-The goal of this exercise is to create a demo calendar application using React.
+```bash
+git clone https://github.com/domiebett/calendar-react-challenge.git
+```
 
-You are provided a base application with a calendar page at `/calendar`. You must allow the user to create "reminder" cards, as described in the Mandatory features section.
-![CalendarJobsity](/uploads/57147905a7a9cc1e0cf46e7886c76ef7/CalendarJobsity.png)
+2. Navigate to the project directory:
 
-## Mandatory features
- - Ability to add "*reminders*" (max. 30 characters) for a day and time specified by the user.
- - Ability to include a city as a location for the reminder.
- - Ability to edit reminders - including changing text, city, day, and time.
- - Add a weather service call from [VisualCrossing](https://www.visualcrossing.com/weather/weather-data-services#) and get the average temperature forecast (e.g. 15° C) for the date of the calendar reminder based on the city.
- - Change the weekend days cells' color
+```bash
+cd calendar-react-challenge
+```
 
-## Bonus (Optional)
+3. Install the dependencies:
 
-- Properly handle overflow when multiple reminders appear on the same date.
-- Unit test the functionality: *Ability to add "*reminders*" (max. 30 characters) for a day and time specified by the user.*
+```bash
+npm install
+```
 
-## Considerations
+## Usage
 
- - Show us in the Readme all relevant information about your project.
- - The project is completely focused on Front-end. Ignore the Back-end.
- - Feel free to use small helper libraries for:
- -- UI Elements.
- -- Date/Time handling.
- - We have implemented Redux thunk for state management, but you may use any state manager you are familiar with.
- - Show us your capabilities in CSS and styling, if possible.
- - Feel free to use Typescript if you prefer it
+1. Start the development server:
 
-# How to deploy
+```bash
+npm start
+```
 
- - Run `npm install` | `yarn install` to install all dependencies.
- - Run `npm start`   | `yarn run` to run the app locally.
- - You can find the project running on `localhost:3000`.
+2. Open the application in your browser:
+
+```bash
+http://localhost:3000/calendar
+```
+
+## Dependencies
+
+- React.js: A JavaScript library for building user interfaces.
+- React Router: A routing library for React applications.
+- dayjs: A JavaScript library for manipulating and formatting dates.
+- React-FontAwesome: React library for use adding icons.
+- Material UI: For elements and consistent, easy styling.
+- Material UI Date Pickers: Material UI library for adding date and time pickers.
+
+## Project Structure
+
+```
+├── public
+│   ├── index.html
+│   └── ...
+├── src
+│   ├── components
+│   │   ├── CalendaGrid
+│   │   ├── CalendarDay
+│   │   ├── Reminders
+│   │   └── ...
+│   ├── assets
+│   │   ├── WeatherIcons
+│   │   └── ...
+│   ├── pages
+│   │   ├── App.js
+│   │   ├── Calendar.js
+│   │   └── ...
+│   ├── services
+│   │   └── Api
+│   ├── utils
+│   │   ├── dateUtils.js
+│   │   └── ...
+│   ├── routes
+│   │   └── index.js
+│   ├── Main.js
+│   └── ...
+├── package.json
+└── ...
+```
+
+- The `public` directory contains the HTML template for the application.
+- The `src` directory contains the application source code.
+- The `components` directory contains React components used in the application.
+- The `assets` directory contains assets e.g weather icons used in the application.
+- The `utils` directory contains utility functions for working with dates and hooks.
+- The `pages` directory contains the application's routable pages.
+- The `services` directory contains source code api calls
+- The `routes` directory contains routing information for the application.
+- The `Main.js` file is the main entry point of the application.
+
+## About the application
+
+This application is only front-end and has no backend implementation. As such, there are no databases or apis used to store reminders or any calendar data. For persistence, I use the browsers localstorage.
+
+This application fetches city information from Accuweather. Weather information is fetched from VisualCrossing. Api keys for these have been provided in the application (These api keys will be available for a limited period for the purposes of app testing after which I will deactivate them, so it is recommeded to create and use your own api keys).
+
+### Using the application
+
+This section contains details on how to use the calendar app location in the `/calendar` route.
+
+#### Adding a reminder
+
+Click on the empty part inside the calendar day. That should open up a card where you can set the reminder name/label and city. The date is set to the clicked calendar date and the time to 08:00(_Time is set to 24 hour. We haven't provided functionaility to change it to 12 hour as of yet. Stay tuned for this in the future :)_)
+
+Once you have filled the fields with the desired values, click on the `Add Reminder` button to add the reminder. Once done, the reminder will be added as a stack to the calendar day and the card will be closed.
+
+**NB:** _You can leave the reminder name and city empty. The name will be displayed as `Unnamed` on the calendar_
+
+Once you add the city, the weather and temperature for the added city at the set date and time will be displayed.
+
+#### Editing an existing reminder
+
+Click on a reminder in the a calendar day. A card will appear which allows you to set desired values. Once done, click on the `Update Reminder` button.
+
+This should update the values for the reminder. Changing the reminder date will move the reminder to the appropriate date card on the calendar.
+
+Editing the city, date or time updates the displayed weather and temperature.
+
+#### Deleting an existing reminder
+
+You have the option to delete the reminder. Open a reminder by clicking on the reminder in the calendar day section. Click on the trash icon in the top right to delete the reminder.
+
+## Contributing
+
+Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b my-feature`.
+3. Make your changes and commit them: `git commit -m 'Add some feature'`.
+4. Push to the branch: `git push origin my-feature`.
+5. Submit a pull request.
+
+## Contact
+
+If you have any questions or suggestions, feel free to reach out to the project maintainer at [dbett49@gmail.com](mailto:dbett49@gmail.com).
