@@ -2,18 +2,21 @@ import { useEffect, useState } from "react";
 
 import {
   faCalendarDays,
+  faCheck,
   faClock,
   faLocationDot,
+  faTimes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button, Card, CardContent } from "@material-ui/core";
-import { CardHeader, Stack, TextField } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Card, CardContent } from "@material-ui/core";
+import { Button, Stack, TextField } from "@mui/material";
 import { IconDatePicker } from "components/Inputs/IconDatePicker";
 import IconCityField from "components/Inputs/IconLocationField";
 import IconTimePicker from "components/Inputs/IconTimePicker";
 import IconWeather from "components/Inputs/IconWeather";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ConfirmAction from "components/Confirm/ConfirmAction";
 
 const ReminderCard = ({
   reminder,
@@ -29,6 +32,7 @@ const ReminderCard = ({
   const [city, setCity] = useState(reminder.city);
   const [date, setDate] = useState(reminder.date);
   const [time, setTime] = useState(reminder.time);
+  const [openConfirmAction, setOpenConfirmAction] = useState(false);
   const originalDate = reminder.date;
 
   useEffect(() => {
@@ -71,15 +75,39 @@ const ReminderCard = ({
     onButtonClick(updatedReminder);
   };
 
+  const handleDeleteConfirmed = () => {
+    handleDelete(date, reminder.id);
+    setOpenConfirmAction(false);
+  };
+
   return (
     <Card variant="elevation" className="reminder-card">
       <CardContent>
         {showDeleteBtn && (
-          <div className="reminder-card-actions">
-            <Button onClick={() => handleDelete(date, reminder.id)}>
-              <FontAwesomeIcon icon={faTrash} />
-            </Button>
-          </div>
+          <>
+            {!openConfirmAction && (
+              <div className="reminder-card-actions">
+                <Button
+                  color="error"
+                  onClick={() => setOpenConfirmAction(true)}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
+              </div>
+            )}
+
+            {openConfirmAction && (
+              <ConfirmAction
+                text="Confirm to delete reminder"
+                handleActionConfirmed={() => {
+                  handleDeleteConfirmed();
+                }}
+                handleActionRejected={() => {
+                  setOpenConfirmAction(false);
+                }}
+              />
+            )}
+          </>
         )}
 
         <div className="reminder-card-name">
