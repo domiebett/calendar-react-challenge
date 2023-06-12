@@ -12,6 +12,25 @@
     font-size: 1.25em;
   }
 
+  &-confirm-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &-confirm-buttons {
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    .accept {
+      margin-right: 5px;
+    }
+  }
+
   &-horizontal {
     display: flex;
     flex-direction: row;

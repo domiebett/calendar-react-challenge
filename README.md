@@ -138,7 +138,7 @@ https://github.com/domiebett/calendar-react-challenge/assets/14890939/6cb0ad2b-f
 You have the option to delete the reminder. Open a reminder by clicking on the reminder in the calendar day section. Click on the trash icon in the top right to delete the reminder.
 
 
-https://github.com/domiebett/calendar-react-challenge/assets/14890939/21c01056-2b58-4aea-9a58-d95440086d8d
+https://github.com/domiebett/calendar-react-challenge/assets/14890939/f5d027da-c3c9-42ae-a8c6-283478d1c0e5
 
 
 ## Contributing
