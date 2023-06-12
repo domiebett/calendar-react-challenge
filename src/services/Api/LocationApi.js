@@ -1,5 +1,5 @@
 const API_HOST = "http://dataservice.accuweather.com/";
-const API_KEY = "AddlSLNxJZ0lsZCAUAjQXnmGlddJhPEI";
+const API_KEY = process.env.REACT_APP_ACCUWEATHER_API_KEY;
 const API_VERSION = "v1";
 
 const getLocationApiUrl = (cityName) => {
