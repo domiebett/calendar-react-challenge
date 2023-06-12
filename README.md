@@ -117,6 +117,10 @@ Once you have filled the fields with the desired values, click on the `Add Remin
 
 Once you add the city, the weather and temperature for the added city at the set date and time will be displayed.
 
+
+https://github.com/domiebett/calendar-react-challenge/assets/14890939/e0f478b5-8419-4eb1-b6d6-c1b2c4781888
+
+
 #### Editing an existing reminder
 
 Click on a reminder in the a calendar day. A card will appear which allows you to set desired values. Once done, click on the `Update Reminder` button.
@@ -125,9 +129,17 @@ This should update the values for the reminder. Changing the reminder date will 
 
 Editing the city, date or time updates the displayed weather and temperature.
 
+
+https://github.com/domiebett/calendar-react-challenge/assets/14890939/6cb0ad2b-f6eb-4fdf-a4a9-93314fa9785d
+
+
 #### Deleting an existing reminder
 
 You have the option to delete the reminder. Open a reminder by clicking on the reminder in the calendar day section. Click on the trash icon in the top right to delete the reminder.
+
+
+https://github.com/domiebett/calendar-react-challenge/assets/14890939/21c01056-2b58-4aea-9a58-d95440086d8d
+
 
 ## Contributing
 
