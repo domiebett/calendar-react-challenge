@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateField } from "@mui/x-date-pickers";
+import PropTypes from "prop-types";
 
 export const IconDatePicker = ({ icon, value, label, onChange = () => {} }) => {
   return (
@@ -15,4 +16,11 @@ export const IconDatePicker = ({ icon, value, label, onChange = () => {} }) => {
       />
     </div>
   );
+};
+
+IconDatePicker.propTypes = {
+  icon: PropTypes.instanceOf(Object).isRequired,
+  value: PropTypes.instanceOf(Object).isRequired,
+  label: PropTypes.string,
+  onChange: PropTypes.func,
 };

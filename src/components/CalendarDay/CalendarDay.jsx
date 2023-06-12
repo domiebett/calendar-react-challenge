@@ -50,9 +50,14 @@ const CalendarDay = ({
 };
 
 CalendarDay.propTypes = {
+  date: PropTypes.instanceOf(Object),
   height: PropTypes.string.isRequired,
   isEnabled: PropTypes.bool,
-  handleModalOpen: PropTypes.func,
+  isWeekend: PropTypes.bool,
+  reminders: PropTypes.arrayOf(PropTypes.object),
+  isPreviousOrNextMonth: PropTypes.bool,
+  handleOpenReminder: PropTypes.func,
+  handleOpenAddReminder: PropTypes.func,
 };
 
 export default CalendarDay;
